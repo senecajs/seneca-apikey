@@ -13,6 +13,22 @@ var lab = (exports.lab = Lab.script())
 var User = require('..')
 var intern = User.intern
 
+
+lab.test('make_msg', async () => {
+  var msg0 = intern.make_msg('generate_key', {})
+  expect(typeof msg0).equal('function')
+})
+
+
+lab.test('make_ctx', async () => {
+  var ctx0 = intern.make_ctx({}, {})
+  expect(ctx0).exists()
+  expect(typeof ctx0).equal('object')
+})
+
+
+
+/*
 lab.test('make_handle', async () => {
   var h0 = intern.make_handle()
   expect(typeof h0).equal('string')
@@ -586,3 +602,4 @@ function make_seneca() {
     .use('..')
   return seneca
 }
+*/

@@ -1,8 +1,8 @@
 ![Seneca](http://senecajs.org/files/assets/seneca-logo.png)
 
-> A [Seneca.js][] user management plugin.
+> A [Seneca.js][] apikey management plugin.
 
-# @seneca/user
+# @seneca/apikey
 [![npm version][npm-badge]][npm-url]
 [![Build Status][travis-badge]][travis-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
@@ -19,7 +19,7 @@
 
 This module is a plugin for
 the [Seneca framework](http://senecajs.org). It provides a set of
-common user management actions (`register`, `login` etc.).
+common apikey management actions (`register`, `login` etc.).
 
 
 ## Install
@@ -28,12 +28,12 @@ common user management actions (`register`, `login` etc.).
 npm install seneca
 npm install seneca-promisify // dependency
 npm install seneca-entity // dependency
-npm install @seneca/user
+npm install @seneca/apikey
 ```
 
 ### Quick example
 
-Register a user and then create an automatic login for testing.
+Register a apikey and then create an automatic login for testing.
 
 ```js
 const Seneca = require('seneca')
@@ -41,15 +41,15 @@ const Seneca = require('seneca')
 var seneca = Seneca()
   .use('promisify')
   .use('entity')
-  .use('user')
+  .use('apikey')
 
-var out = await seneca.post('sys:user,register:user', {
+var out = await seneca.post('sys:apikey,register:apikey', {
   handle: 'alice'
 })
 
-console.log('USER:', out.user)
+console.log('APIKEY:', out.apikey)
 
-out = await seneca.post('sys:user,login:user', {
+out = await seneca.post('sys:apikey,login:apikey', {
   handle: 'alice',
   auto: true
 })
@@ -79,26 +79,26 @@ detailed usage examples:
 
 ## Action Patterns
 
-* [adjust:user,sys:user](#-adjustusersysuser-)
-* [auth:user,sys:user](#-authusersysuser-)
-* [change:pass,sys:user](#-changepasssysuser-)
-* [change:handle,sys:user](#-changehandlesysuser-)
-* [change:email,sys:user](#-changeemailsysuser-)
-* [change:password,sys:user](#-changepasswordsysuser-)
-* [check:verify,sys:user](#-checkverifysysuser-)
-* [check:exists,sys:user](#-checkexistssysuser-)
-* [cmd:encrypt,hook:password,sys:user](#-cmdencrypthookpasswordsysuser-)
-* [cmd:pass,hook:password,sys:user](#-cmdpasshookpasswordsysuser-)
-* [get:user,sys:user](#-getusersysuser-)
-* [list:user,sys:user](#-listusersysuser-)
-* [list:login,sys:user](#-listloginsysuser-)
-* [list:verify,sys:user](#-listverifysysuser-)
-* [login:user,sys:user](#-loginusersysuser-)
-* [logout:user,sys:user](#-logoutusersysuser-)
-* [make:verify,sys:user](#-makeverifysysuser-)
-* [register:user,sys:user](#-registerusersysuser-)
-* [remove:user,sys:user](#-removeusersysuser-)
-* [sys:user,update:user](#-sysuserupdateuser-)
+* [adjust:apikey,sys:apikey](#-adjustapikeysysapikey-)
+* [auth:apikey,sys:apikey](#-authapikeysysapikey-)
+* [change:pass,sys:apikey](#-changepasssysapikey-)
+* [change:handle,sys:apikey](#-changehandlesysapikey-)
+* [change:email,sys:apikey](#-changeemailsysapikey-)
+* [change:password,sys:apikey](#-changepasswordsysapikey-)
+* [check:verify,sys:apikey](#-checkverifysysapikey-)
+* [check:exists,sys:apikey](#-checkexistssysapikey-)
+* [cmd:encrypt,hook:password,sys:apikey](#-cmdencrypthookpasswordsysapikey-)
+* [cmd:pass,hook:password,sys:apikey](#-cmdpasshookpasswordsysapikey-)
+* [get:apikey,sys:apikey](#-getapikeysysapikey-)
+* [list:apikey,sys:apikey](#-listapikeysysapikey-)
+* [list:login,sys:apikey](#-listloginsysapikey-)
+* [list:verify,sys:apikey](#-listverifysysapikey-)
+* [login:apikey,sys:apikey](#-loginapikeysysapikey-)
+* [logout:apikey,sys:apikey](#-logoutapikeysysapikey-)
+* [make:verify,sys:apikey](#-makeverifysysapikey-)
+* [register:apikey,sys:apikey](#-registerapikeysysapikey-)
+* [remove:apikey,sys:apikey](#-removeapikeysysapikey-)
+* [sys:apikey,update:apikey](#-sysapikeyupdateapikey-)
 
 
 <!--END:action-list-->
@@ -108,9 +108,9 @@ detailed usage examples:
 
 ## Action Descriptions
 
-### &laquo; `adjust:user,sys:user` &raquo;
+### &laquo; `adjust:apikey,sys:apikey` &raquo;
 
-Adjust user status idempotently (activated, etc.).
+Adjust apikey status idempotently (activated, etc.).
 
 
 #### Parameters
@@ -118,7 +118,7 @@ Adjust user status idempotently (activated, etc.).
 
 * _active_ : boolean <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -133,14 +133,14 @@ Adjust user status idempotently (activated, etc.).
 
 ```
 {
-  ok: '_true_ if user found',
-  user: 'user entity'
+  ok: '_true_ if apikey found',
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `auth:user,sys:user` &raquo;
+### &laquo; `auth:apikey,sys:apikey` &raquo;
 
 Authenticate a login using token
 
@@ -149,9 +149,9 @@ Authenticate a login using token
 
 
 * _token_ : string <i><small>{presence:required}</small></i>
-* _user_fields_ : array <i><small>{presence:optional}</small></i>
+* _apikey_fields_ : array <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -167,16 +167,16 @@ Authenticate a login using token
 ```
 {
   ok: '_true_ if login is active',
-  user: 'user entity',
-  login: 'user entity'
+  apikey: 'apikey entity',
+  login: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `change:pass,sys:user` &raquo;
+### &laquo; `change:pass,sys:apikey` &raquo;
 
-Change user password.
+Change apikey password.
 
 
 #### Parameters
@@ -186,7 +186,7 @@ Change user password.
 * _repeat_ : string <i><small>{presence:optional}</small></i>
 * _verify_ : string <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -202,15 +202,15 @@ Change user password.
 ```
 {
   ok: '_true_ if changed',
-  user: 'user entity'
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `change:handle,sys:user` &raquo;
+### &laquo; `change:handle,sys:apikey` &raquo;
 
-Change user handle.
+Change apikey handle.
 
 
 #### Parameters
@@ -218,7 +218,7 @@ Change user handle.
 
 * _new_handle_ : string
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -234,15 +234,15 @@ Change user handle.
 ```
 {
   ok: '_true_ if changed',
-  user: 'user entity'
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `change:email,sys:user` &raquo;
+### &laquo; `change:email,sys:apikey` &raquo;
 
-Change user email.
+Change apikey email.
 
 
 #### Parameters
@@ -250,7 +250,7 @@ Change user email.
 
 * _new_email_ : string
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -266,15 +266,15 @@ Change user email.
 ```
 {
   ok: '_true_ if changed',
-  user: 'user entity'
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `change:password,sys:user` &raquo;
+### &laquo; `change:password,sys:apikey` &raquo;
 
-Change user password.
+Change apikey password.
 
 
 #### Parameters
@@ -284,7 +284,7 @@ Change user password.
 * _repeat_ : string <i><small>{presence:optional}</small></i>
 * _verify_ : string <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -300,13 +300,13 @@ Change user password.
 ```
 {
   ok: '_true_ if changed',
-  user: 'user entity'
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `check:verify,sys:user` &raquo;
+### &laquo; `check:verify,sys:apikey` &raquo;
 
 Check a verfication entry.
 
@@ -319,7 +319,7 @@ Check a verfication entry.
 * _now_ : number <i><small>{presence:optional}</small></i>
 * _expiry_ : boolean <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -341,16 +341,16 @@ Check a verfication entry.
 
 
 ----------
-### &laquo; `check:exists,sys:user` &raquo;
+### &laquo; `check:exists,sys:apikey` &raquo;
 
-Check user exists.
+Check apikey exists.
 
 
 #### Parameters
 
 
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -365,14 +365,14 @@ Check user exists.
 
 ```
 {
-  ok: '_true_ if user exists',
-  user: 'user entity'
+  ok: '_true_ if apikey exists',
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `cmd:encrypt,hook:password,sys:user` &raquo;
+### &laquo; `cmd:encrypt,hook:password,sys:apikey` &raquo;
 
 Encrypt a plain text password string.
 
@@ -383,7 +383,7 @@ Encrypt a plain text password string.
 
 
 
-* `cmd:encrypt,hook:password,sys:user,pass:foofoobarbar`
+* `cmd:encrypt,hook:password,sys:apikey,pass:foofoobarbar`
   * Result: {ok:true, pass:_encrypted-string_, salt:_string_}
 #### Parameters
 
@@ -409,7 +409,7 @@ Encrypt a plain text password string.
 
 
 ----------
-### &laquo; `cmd:pass,hook:password,sys:user` &raquo;
+### &laquo; `cmd:pass,hook:password,sys:apikey` &raquo;
 
 Validate a plain text password string.
 
@@ -420,7 +420,7 @@ Validate a plain text password string.
 
 
 
-* `cmd:pass,hook:password,sys:user,pass:goodpassword`
+* `cmd:pass,hook:password,sys:apikey,pass:goodpassword`
   * Result: {ok:true}
 #### Parameters
 
@@ -445,16 +445,16 @@ Validate a plain text password string.
 
 
 ----------
-### &laquo; `get:user,sys:user` &raquo;
+### &laquo; `get:apikey,sys:apikey` &raquo;
 
-Get user details
+Get apikey details
 
 
 #### Parameters
 
 
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -469,16 +469,16 @@ Get user details
 
 ```
 {
-  ok: '_true_ if user found',
-  user: 'user entity'
+  ok: '_true_ if apikey found',
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `list:user,sys:user` &raquo;
+### &laquo; `list:apikey,sys:apikey` &raquo;
 
-List users
+List apikeys
 
 
 #### Parameters
@@ -495,16 +495,16 @@ List users
 
 ```
 {
-  ok: '_true_ if user found',
-  items: 'user entity item list'
+  ok: '_true_ if apikey found',
+  items: 'apikey entity item list'
 }
 ```
 
 
 ----------
-### &laquo; `list:login,sys:user` &raquo;
+### &laquo; `list:login,sys:apikey` &raquo;
 
-List logins for a user
+List logins for a apikey
 
 
 #### Parameters
@@ -513,7 +513,7 @@ List logins for a user
 * _active_ : boolean <i><small>{presence:optional}</small></i>
 * _login_q_ : object <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -528,14 +528,14 @@ List logins for a user
 
 ```
 {
-  ok: '_true_ if user found',
-  items: 'user entity item list'
+  ok: '_true_ if apikey found',
+  items: 'apikey entity item list'
 }
 ```
 
 
 ----------
-### &laquo; `list:verify,sys:user` &raquo;
+### &laquo; `list:verify,sys:apikey` &raquo;
 
 Create a verification entry (multiple use cases).
 
@@ -551,7 +551,7 @@ Create a verification entry (multiple use cases).
 * _expire_point_ : number <i><small>{presence:optional}</small></i>
 * _expire_duration_ : number <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -566,23 +566,23 @@ Create a verification entry (multiple use cases).
 
 ```
 {
-  ok: '_true_ if user found',
+  ok: '_true_ if apikey found',
   verify: 'verify entity'
 }
 ```
 
 
 ----------
-### &laquo; `login:user,sys:user` &raquo;
+### &laquo; `login:apikey,sys:apikey` &raquo;
 
-Login user
+Login apikey
 
 
 #### Parameters
 
 
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -599,24 +599,24 @@ Login user
 
 ```
 {
-  ok: '_true_ if user logged in',
-  user: 'user entity',
+  ok: '_true_ if apikey logged in',
+  apikey: 'apikey entity',
   login: 'login entity'
 }
 ```
 
 
 ----------
-### &laquo; `logout:user,sys:user` &raquo;
+### &laquo; `logout:apikey,sys:apikey` &raquo;
 
-Login user
+Login apikey
 
 
 #### Parameters
 
 
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -635,14 +635,14 @@ Login user
 
 ```
 {
-  ok: '_true_ if user logged in',
+  ok: '_true_ if apikey logged in',
   count: 'number of logouts'
 }
 ```
 
 
 ----------
-### &laquo; `make:verify,sys:user` &raquo;
+### &laquo; `make:verify,sys:apikey` &raquo;
 
 Create a verification entry (multiple use cases).
 
@@ -658,7 +658,7 @@ Create a verification entry (multiple use cases).
 * _expire_point_ : number <i><small>{presence:optional}</small></i>
 * _expire_duration_ : number <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -673,16 +673,16 @@ Create a verification entry (multiple use cases).
 
 ```
 {
-  ok: '_true_ if user found',
+  ok: '_true_ if apikey found',
   verify: 'verify entity'
 }
 ```
 
 
 ----------
-### &laquo; `register:user,sys:user` &raquo;
+### &laquo; `register:apikey,sys:apikey` &raquo;
 
-Register a new user
+Register a new apikey
 
 
 #### Parameters
@@ -691,8 +691,8 @@ Register a new user
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
-* _user_ : object <i><small>{unknown:true}</small></i>
-* _user_data_ : object <i><small>{unknown:true}</small></i>
+* _apikey_ : object <i><small>{unknown:true}</small></i>
+* _apikey_data_ : object <i><small>{unknown:true}</small></i>
 
 
 
@@ -702,23 +702,23 @@ Register a new user
 
 ```
 {
-  ok: '_true_ if user registration succeeded',
-  user: 'user entity'
+  ok: '_true_ if apikey registration succeeded',
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `remove:user,sys:user` &raquo;
+### &laquo; `remove:apikey,sys:apikey` &raquo;
 
-Remove a user
+Remove a apikey
 
 
 #### Parameters
 
 
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -733,24 +733,24 @@ Remove a user
 
 ```
 {
-  ok: '_true_ if user removed',
-  user: 'user entity'
+  ok: '_true_ if apikey removed',
+  apikey: 'apikey entity'
 }
 ```
 
 
 ----------
-### &laquo; `sys:user,update:user` &raquo;
+### &laquo; `sys:apikey,update:apikey` &raquo;
 
-Update a user
+Update a apikey
 
 
 #### Parameters
 
 
-* _user_ : object <i><small>{presence:optional}</small></i>
+* _apikey_ : object <i><small>{presence:optional}</small></i>
 * _id_ : string <i><small>{presence:optional}</small></i>
-* _user_id_ : string <i><small>{presence:optional}</small></i>
+* _apikey_id_ : string <i><small>{presence:optional}</small></i>
 * _email_ : string <i><small>{presence:optional}</small></i>
 * _handle_ : string <i><small>{presence:optional}</small></i>
 * _nick_ : string <i><small>{presence:optional}</small></i>
@@ -765,8 +765,8 @@ Update a user
 
 ```
 {
-  ok: '_true_ if user updated',
-  user: 'user entity'
+  ok: '_true_ if apikey updated',
+  apikey: 'apikey entity'
 }
 ```
 
@@ -785,16 +785,16 @@ Licensed under [MIT][].
 
 [MIT]: ./LICENSE
 [Seneca.js]: https://www.npmjs.com/package/seneca
-[travis-badge]: https://travis-ci.org/senecajs/seneca-user.svg
-[travis-url]: https://travis-ci.org/senecajs/seneca-user
-[coveralls-badge]: https://coveralls.io/repos/github/senecajs/seneca-user/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/senecajs/seneca-user?branch=master
+[travis-badge]: https://travis-ci.org/senecajs/seneca-apikey.svg
+[travis-url]: https://travis-ci.org/senecajs/seneca-apikey
+[coveralls-badge]: https://coveralls.io/repos/github/senecajs/seneca-apikey/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/senecajs/seneca-apikey?branch=master
 [codeclimate-badge]: https://api.codeclimate.com/v1/badges/404faaa89a95635ddfc0/maintainability
-[codeclimate-url]: https://codeclimate.com/github/senecajs/seneca-user/maintainability
-[npm-badge]: https://img.shields.io/npm/v/@seneca/user.svg
-[npm-url]: https://npmjs.com/package/@seneca/user
-[david-badge]: https://david-dm.org/senecajs/seneca-user.svg
-[david-url]: https://david-dm.org/senecajs/seneca-user
+[codeclimate-url]: https://codeclimate.com/github/senecajs/seneca-apikey/maintainability
+[npm-badge]: https://img.shields.io/npm/v/@seneca/apikey.svg
+[npm-url]: https://npmjs.com/package/@seneca/apikey
+[david-badge]: https://david-dm.org/senecajs/seneca-apikey.svg
+[david-url]: https://david-dm.org/senecajs/seneca-apikey
 [gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/senecajs/seneca
 [Senecajs org]: https://github.com/senecajs/

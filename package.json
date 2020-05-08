@@ -1,10 +1,11 @@
 {
-  "name": "@seneca/user",
-  "description": "User management plugin for Seneca",
-  "version": "5.6.0",
+  "name": "@seneca/apikey",
+  "description": "Apikey management plugin for Seneca",
+  "version": "0.0.1",
   "keywords": [
     "seneca",
-    "user",
+    "api",
+    "key",
     "plugin"
   ],
   "author": {
@@ -13,7 +14,7 @@
     "url": "http://richardrodger.com/"
   },
   "license": "MIT",
-  "main": "user.js",
+  "main": "apikey.js",
   "scripts": {
     "test": "lab -v -L  -t 100 -P test -r console -o stdout -r html -o test/coverage.html",
     "test-msgs": "lab -t 90 --coverage-exclude lib/hasher.js -P messages.test -r console -o stdout -r html -o test/coverage.html",
@@ -29,30 +30,13 @@
   "files": [
     "LICENSE",
     "README.md",
-    "user.js",
-    "user-docs.js",
+    "apikey.js",
+    "apikey-docs.js",
     "lib"
   ],
-  "contributors": [
-    "Mircea Alexandru <mircea.alexandru@gmail.com> (http://www.alexandrumircea.ro)",
-    "Cristian Kiss <kissdevel@gmail.com> (https://github.com/ckiss)",
-    "Mihai Dima <mihaizn@gmail.com> (https://github.com/mihaidma)",
-    "Adrien Becchis (https://github.com/AdrieanKhisbe)",
-    "Shane Lacey (https://github.com/shanel262)",
-    "Otávio Augusto Soares (https://github.com/otaviosoares)",
-    "Dean McDonnell (https://github.com/mcdonnelldean)",
-    "Nicolas Herment (https://github.com/nherment)",
-    "Paolo Chiodi (https://github.com/paolochiodi)",
-    "Emer Rutherford (https://github.com/eeswr)",
-    "Matteo Collina (https://github.com/mcollina)",
-    "Wyatt Preul (https://github.com/geek)",
-    "rithdmc (https://github.com/rithdmc)",
-    "Guy Ellis (https://github.com/guyellis)",
-    "Cian Butler (https://github.com/butlerx)",
-    "Sorin Silaghi (https://github.com/sorin7486)"
-  ],
+  "contributors": [],
   "engines": {
-    "node": ">=8"
+    "node": ">=10"
   },
   "dependencies": {
     "nid": "^1.1.0",
@@ -71,9 +55,6 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/senecajs/seneca-user.git"
-  },
-  "pre-commit": [
-    "test"
-  ]
+    "url": "https://github.com/senecajs/seneca-apikey.git"
+  }
 }

@@ -1,6 +1,7 @@
 /* Copyright (c) 2020 Richard Rodger and other contributors, MIT License */
 'use strict'
 
+// TODO should come from seneca-msg-test to avoid version clash
 const Joi = require('@hapi/joi')
 
 var print_calls = false
@@ -12,14 +13,20 @@ const Shared = require('./shared')
 const LN = require('seneca-msg-test').LN
 
 module.exports = [
-  // user not found
-  {
-    print: print_calls,
-    pattern: 'adjust:user' + LN(),
-    params: {},
-    out: { ok: false, why: 'no-user-query' }
-  },
 
+  LN({
+    print: print_calls,
+    pattern: 'generate:key',
+    params: {
+      otp: 'otp01'
+    },
+    out: {
+      ok: true,
+      xorkey: Joi.string()
+    }
+  }),
+
+  /*
   // user not found
   {
     print: print_calls,
@@ -231,4 +238,5 @@ module.exports = [
       why: 'user-not-active'
     }
   }
+*/
 ]

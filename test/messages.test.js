@@ -16,13 +16,14 @@ lab.test('messages', { timeout: 5555 }, async () => {
   var seneca = Shared.make_seneca()
 
   var run = SenecaMsgTest(seneca, {
-    pattern: 'sys:user',
+    pattern: 'sys:apikey',
     print: false,
     log: false,
 
     // NOTE: order is significant
     calls: []
-      .concat(require('./register_get.calls.js'))
+      .concat(require('./generate_key.calls.js'))
+/*
       .concat(require('./password.calls.js'))
       .concat(require('./adjust.calls.js'))
       .concat(require('./verify.calls.js'))
@@ -30,6 +31,7 @@ lab.test('messages', { timeout: 5555 }, async () => {
       .concat(require('./logout.calls.js'))
       .concat(require('./change.calls.js'))
       .concat(require('./final.calls.js'))
+*/
   })
 
   // TODO seneca-msg-test should handle this

@@ -1,13 +1,16 @@
 // NOTE: validation is not defined here as that would require calling code to
 // use seneca-doc
 
+// TODO surely seneca-doc.Joi would be better here ensuring no version clash?
 const Joi = require('@hapi/joi')
+//const Joi = require('seneca-doc').Joi
 
-const query_user = {
+/*
+const query_apikey = {
   id: Joi.string()
     .min(1)
     .optional(),
-  user_id: Joi.string()
+  apikey_id: Joi.string()
     .min(1)
     .optional(),
   email: Joi.string()
@@ -25,101 +28,101 @@ const query_user = {
     .optional()
 }
 
-const user_data = {
+const apikey_data = {
   email: Joi.string()
     .email()
     .optional(),
   handle: Joi.string().optional(),
   nick: Joi.string().optional() // legacy
 }
+*/
 
 module.exports = {
-  adjust_user: {
-    desc: 'Adjust user status idempotently (activated, etc.).',
+  generate_key: {
+    desc: 'Generate a new API key.',
     reply_desc: {
-      ok: '_true_ if user found',
-      user: 'user entity'
+      ok: '_true_ if successful',
+      xorkey: 'Key string xor\'d with otp input'
     },
-    validate: Object.assign(
-      {
-        active: Joi.boolean().optional()
-      },
-      query_user
-    )
+    validate: {
+      // TODO check length
+      otp: Joi.string()
+    }
   },
 
-  auth_user: {
+  /*
+  auth_apikey: {
     desc: 'Authenticate a login using token',
     reply_desc: {
       ok: '_true_ if login is active',
-      user: 'user entity',
-      login: 'user entity'
+      apikey: 'apikey entity',
+      login: 'apikey entity'
     },
     validate: Object.assign(
       {
         token: Joi.string().required(),
-        user_fields: Joi.array()
+        apikey_fields: Joi.array()
           .items(Joi.string())
           .optional()
       },
-      query_user
+      query_apikey
     )
   },
 
-  register_user: {
-    desc: 'Register a new user',
+  register_apikey: {
+    desc: 'Register a new apikey',
     reply_desc: {
-      ok: '_true_ if user registration succeeded',
-      user: 'user entity'
+      ok: '_true_ if apikey registration succeeded',
+      apikey: 'apikey entity'
     },
     validate: {
-      ...user_data,
-      user: Joi.object({
-        ...user_data
+      ...apikey_data,
+      apikey: Joi.object({
+        ...apikey_data
       }).unknown(),
-      user_data: Joi.object({
-        ...user_data
+      apikey_data: Joi.object({
+        ...apikey_data
       }).unknown()
     }
   },
 
-  get_user: {
-    desc: 'Get user details',
+  get_apikey: {
+    desc: 'Get apikey details',
     reply_desc: {
-      ok: '_true_ if user found',
-      user: 'user entity'
+      ok: '_true_ if apikey found',
+      apikey: 'apikey entity'
     },
-    validate: query_user
+    validate: query_apikey
   },
 
-  remove_user: {
-    desc: 'Remove a user',
+  remove_apikey: {
+    desc: 'Remove a apikey',
     reply_desc: {
-      ok: '_true_ if user removed',
-      user: 'user entity'
+      ok: '_true_ if apikey removed',
+      apikey: 'apikey entity'
     },
-    validate: query_user
+    validate: query_apikey
   },
 
-  update_user: {
-    desc: 'Update a user',
+  update_apikey: {
+    desc: 'Update a apikey',
     reply_desc: {
-      ok: '_true_ if user updated',
-      user: 'user entity'
+      ok: '_true_ if apikey updated',
+      apikey: 'apikey entity'
     },
     validate: Object.assign(
       {
-        user: Joi.object().optional()
+        apikey: Joi.object().optional()
       },
-      query_user
+      query_apikey
     )
   },
 
-  list_user: {
-    desc: 'List users',
+  list_apikey: {
+    desc: 'List apikeys',
     reply_desc: {
-      ok: '_true_ if user found',
-      items: 'user entity item list'
+      ok: '_true_ if apikey found',
+      items: 'apikey entity item list'
     },
     validate: {
       active: Joi.boolean().optional(),
@@ -128,29 +131,29 @@ module.exports = {
   },
 
   list_login: {
-    desc: 'List logins for a user',
+    desc: 'List logins for a apikey',
     reply_desc: {
-      ok: '_true_ if user found',
-      items: 'user entity item list'
+      ok: '_true_ if apikey found',
+      items: 'apikey entity item list'
     },
     validate: Object.assign(
       {
         active: Joi.boolean().optional(),
         login_q: Joi.object().optional()
       },
-      query_user
+      query_apikey
     )
   },
 
-  login_user: {
-    desc: 'Login user',
+  login_apikey: {
+    desc: 'Login apikey',
     reply_desc: {
-      ok: '_true_ if user logged in',
-      user: 'user entity',
+      ok: '_true_ if apikey logged in',
+      apikey: 'apikey entity',
       login: 'login entity'
     },
     validate: {
-      ...query_user,
+      ...query_apikey,
       auto: Joi.boolean().optional(),
       pass: Joi.string().optional(),
       fields: Joi.array()
@@ -159,14 +162,14 @@ module.exports = {
     }
   },
 
-  logout_user: {
-    desc: 'Login user',
+  logout_apikey: {
+    desc: 'Login apikey',
     reply_desc: {
-      ok: '_true_ if user logged in',
+      ok: '_true_ if apikey logged in',
       count: 'number of logouts'
     },
     validate: {
-      ...query_user,
+      ...query_apikey,
       token: Joi.string().optional(),
       login_in: Joi.string().optional(),
       login_q: Joi.object()
@@ -200,18 +203,18 @@ module.exports = {
   },
 
   check_exists: {
-    desc: 'Check user exists.',
+    desc: 'Check apikey exists.',
     reply_desc: {
-      ok: '_true_ if user exists',
-      user: 'user entity'
+      ok: '_true_ if apikey exists',
+      apikey: 'apikey entity'
     },
-    validate: query_user
+    validate: query_apikey
   },
 
   make_verify: {
     desc: 'Create a verification entry (multiple use cases).',
     reply_desc: {
-      ok: '_true_ if user found',
+      ok: '_true_ if apikey found',
       verify: 'verify entity'
     },
     validate: Object.assign(
@@ -226,29 +229,29 @@ module.exports = {
         expire_point: Joi.number().optional(),
         expire_duration: Joi.number().optional()
       },
-      query_user
+      query_apikey
     )
   },
 
   change_handle: {
-    desc: 'Change user handle.',
+    desc: 'Change apikey handle.',
     reply_desc: {
       ok: '_true_ if changed',
-      user: 'user entity'
+      apikey: 'apikey entity'
     },
     validate: Object.assign(
       {
         new_handle: Joi.string().min(1)
       },
-      query_user
+      query_apikey
     )
   },
 
   change_email: {
-    desc: 'Change user email.',
+    desc: 'Change apikey email.',
     reply_desc: {
       ok: '_true_ if changed',
-      user: 'user entity'
+      apikey: 'apikey entity'
     },
     validate: Object.assign(
       {
@@ -256,15 +259,15 @@ module.exports = {
           .email()
           .min(1)
       },
-      query_user
+      query_apikey
     )
   },
 
   change_pass: {
-    desc: 'Change user password.',
+    desc: 'Change apikey password.',
     reply_desc: {
       ok: '_true_ if changed',
-      user: 'user entity'
+      apikey: 'apikey entity'
     },
     validate: Object.assign(
       {
@@ -276,7 +279,7 @@ module.exports = {
           .min(1)
           .optional()
       },
-      query_user
+      query_apikey
     )
   },
 
@@ -293,7 +296,7 @@ module.exports = {
         now: Joi.number().optional(),
         expiry: Joi.boolean().optional()
       },
-      query_user
+      query_apikey
     )
   },
 
@@ -313,4 +316,6 @@ module.exports = {
       rounds: Joi.number().optional()
     }
   }
+
+*/
 }

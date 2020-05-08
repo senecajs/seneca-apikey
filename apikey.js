@@ -1,22 +1,26 @@
-/* Copyright (c) 2012-2020 Richard Rodger and other contributors, MIT License. */
+/* Copyright (c) 2020 Richard Rodger and other contributors, MIT License. */
 'use strict'
 
 const Assert = require('assert')
 
-const Crypto = require('crypto')
-const Nid = require('nid')
-const Uuid = require('uuid')
-const Joi = require('@hapi/joi')
+//const Crypto = require('crypto')
+//const Nid = require('nid')
+//const Uuid = require('uuid')
+//const Joi = require('@hapi/joi')
 
-module.exports = user
+module.exports = apikey
 
 module.exports.errors = {}
+
+// TODO this might be a better way to provide docs?
+// module.exports.doc = require('./apikey-doc')
 
 const intern = (module.exports.intern = make_intern())
 
 module.exports.defaults = {
   test: false,
 
+  /*
   salt: {
     bytelen: 16,
     format: 'hex'
@@ -58,26 +62,26 @@ module.exports.defaults = {
   ensure_handle: intern.ensure_handle,
   make_handle: intern.make_handle,
   make_token: intern.make_token
+  */
 }
 
-function user(options) {
+function apikey(options) {
   var seneca = this
   var ctx = intern.make_ctx({}, options)
 
-  // TODO @seneca/audit - record user modifications - e.g activate
-  // TODO @seneca/microcache - short duration cache of msg responses
-
   seneca
-    .fix('sys:user')
+    .fix('sys:apikey')
 
-    .message('register:user', intern.make_msg('register_user', ctx))
-    .message('get:user', intern.make_msg('get_user', ctx))
-    .message('list:user', intern.make_msg('list_user', ctx))
-    .message('adjust:user', intern.make_msg('adjust_user', ctx))
-    .message('update:user', intern.make_msg('update_user', ctx))
-    .message('remove:user', intern.make_msg('remove_user', ctx))
-    .message('login:user', intern.make_msg('login_user', ctx))
-    .message('logout:user', intern.make_msg('logout_user', ctx))
+    .message('generate:key', intern.make_msg('generate_key', ctx))
+
+/*
+    .message('get:apikey', intern.make_msg('get_apikey', ctx))
+    .message('list:apikey', intern.make_msg('list_apikey', ctx))
+    .message('adjust:apikey', intern.make_msg('adjust_apikey', ctx))
+    .message('update:apikey', intern.make_msg('update_apikey', ctx))
+    .message('remove:apikey', intern.make_msg('remove_apikey', ctx))
+    .message('login:apikey', intern.make_msg('login_apikey', ctx))
+    .message('logout:apikey', intern.make_msg('logout_apikey', ctx))
 
     .message('list:login', intern.make_msg('list_login', ctx))
 
@@ -92,21 +96,24 @@ function user(options) {
     .message('check:verify', intern.make_msg('check_verify', ctx))
     .message('check:exists', intern.make_msg('check_exists', ctx))
 
-    .message('auth:user', intern.make_msg('auth_user', ctx))
+    .message('auth:apikey', intern.make_msg('auth_apikey', ctx))
 
     .message('hook:password,cmd:encrypt', intern.make_msg('cmd_encrypt', ctx))
     .message('hook:password,cmd:pass', intern.make_msg('cmd_pass', ctx))
 
     // TODO seneca.alias method?
     .message('change:password', intern.make_msg('change_pass', ctx))
-
+*/
+  
   return {
     exports: {
-      find_user: async function(seneca, msg, special_ctx) {
+/*
+      find_apikey: async function(seneca, msg, special_ctx) {
         var merged_ctx =
           null == special_ctx ? ctx : seneca.util.deep({}, ctx, special_ctx)
-        return intern.find_user(seneca, msg, merged_ctx)
+        return intern.find_apikey(seneca, msg, merged_ctx)
       }
+*/
     }
   }
 }
@@ -123,67 +130,47 @@ function make_intern() {
       Assert(initial_ctx)
       Assert(options)
 
-      // convert arrays to lookup maps
-      var handle = { reserved: {} }
-
-      for (var i = 0; i < options.handle.reserved.length; i++) {
-        handle.reserved[options.handle.reserved[i]] = true
-      }
-
-      var must_not_contain_array = options.handle.must_not_contain()
-      var must_not_contain_map = {}
-      for (i = 0; i < must_not_contain_array.length; i++) {
-        must_not_contain_map[must_not_contain_array[i]] = true
-      }
-      handle.must_not_contain = () => must_not_contain_map
-
       return Object.assign(
         {
-          intern,
           options,
+          intern,
 
           // Standard entity canons
-          sys_user: 'sys/user',
-          sys_login: 'sys/login',
-          sys_verify: 'sys/verify',
-
-          // Standard user fields to load - keep data volume low by default
-          standard_user_fields: options.fields.standard,
-
-          // Convenience query fields - msg.email etc.
-          convenience_fields: 'id,user_id,handle,email,name'.split(','),
-
-          handle
+          sys_apikey: 'sys/apikey',
         },
         initial_ctx
       )
     },
+  }
+}
 
-    user_exists: async function(seneca, msg, ctx) {
+/*
+    
+    apikey_exists: async function(seneca, msg, ctx) {
       ctx.fields = []
-      var found = await intern.find_user(seneca, msg, ctx)
+      var found = await intern.find_apikey(seneca, msg, ctx)
       return found.ok
     },
 
-    find_user: async function(seneca, msg, ctx) {
-      // User may already be provided in parameters.
-      var user = msg.user && msg.user.entity$ ? msg.user : null
+    find_apikey: async function(seneca, msg, ctx) {
+      // Apikey may already be provided in parameters.
+      var apikey = msg.apikey && msg.apikey.entity$ ? msg.apikey : null
 
-      // user_q when q used for caller's query
-      var msg_user_query = msg.user_q || msg.q || {}
+      // apikey_q when q used for caller's query
+      var msg_apikey_query = msg.apikey_q || msg.q || {}
 
-      if (null == user) {
+      if (null == apikey) {
         msg = intern.fix_nick_handle(msg, ctx.options)
 
         var why = null
 
-        // allow use of `q` (or `user_q`) to specify query,
-        // or `user` prop (q has precedence)
+        // allow use of `q` (or `apikey_q`) to specify query,
+        // or `apikey` prop (q has precedence)
         var q = Object.assign(
           {},
-          msg.user || {},
-          msg.user_data || {},
-          msg_user_query
+          msg.apikey || {},
+          msg.apikey_data || {},
+          msg_apikey_query
         )
 
         // can only use one convenience field - they are ordered by decreasing
@@ -196,11 +183,11 @@ function make_intern() {
           }
         }
 
-        // `user_id` is an alias for `id`
-        if (null == q.id && null != q.user_id) {
-          q.id = q.user_id
+        // `apikey_id` is an alias for `id`
+        if (null == q.id && null != q.apikey_id) {
+          q.id = q.apikey_id
         }
-        delete q.user_id
+        delete q.apikey_id
 
         // TODO waiting for fix: https://github.com/senecajs/seneca-entity/issues/57
 
@@ -208,47 +195,47 @@ function make_intern() {
           // Add additional fields to standard fields.
           var fields = Array.isArray(msg.fields) ? msg.fields : []
           q.fields$ = [
-            ...new Set((q.fields$ || fields).concat(ctx.standard_user_fields))
+            ...new Set((q.fields$ || fields).concat(ctx.standard_apikey_fields))
           ]
 
           // These are the unique fields
           if (null == q.id && null == q.handle && null == q.email) {
-            var users = await seneca.entity(ctx.sys_user).list$(q)
+            var apikeys = await seneca.entity(ctx.sys_apikey).list$(q)
 
-            if (1 === users.length) {
-              user = intern.fix_nick_handle(users[0], ctx.options)
-            } else if (1 < users.length) {
-              // This is bad, as you could operate on another user
-              why = 'multiple-matching-users'
+            if (1 === apikeys.length) {
+              apikey = intern.fix_nick_handle(apikeys[0], ctx.options)
+            } else if (1 < apikeys.length) {
+              // This is bad, as you could operate on another apikey
+              why = 'multiple-matching-apikeys'
             }
           } else {
             // Use load$ to trigger entity cache
-            user = await seneca.entity(ctx.sys_user).load$(q)
+            apikey = await seneca.entity(ctx.sys_apikey).load$(q)
           }
         } else {
-          why = 'no-user-query'
+          why = 'no-apikey-query'
         }
       }
 
-      var out = { ok: null != user, user: user || null }
-      if (null == user) {
-        out.why = why || 'user-not-found'
+      var out = { ok: null != apikey, apikey: apikey || null }
+      if (null == apikey) {
+        out.why = why || 'apikey-not-found'
       }
 
       return out
     },
 
-    // expects normalized user data
-    build_pass_fields: async function(seneca, user_data, ctx) {
-      var pass = user_data.pass
-      var repeat = user_data.repeat // optional
-      var salt = user_data.salt
+    // expects normalized apikey data
+    build_pass_fields: async function(seneca, apikey_data, ctx) {
+      var pass = apikey_data.pass
+      var repeat = apikey_data.repeat // optional
+      var salt = apikey_data.salt
 
       if ('string' === typeof repeat && repeat !== pass) {
         return { ok: false, why: 'repeat-password-mismatch' }
       }
 
-      var res = await seneca.post('sys:user,hook:password,cmd:encrypt', {
+      var res = await seneca.post('sys:apikey,hook:password,cmd:encrypt', {
         pass: pass,
         salt: salt,
         whence: 'build'
@@ -267,9 +254,9 @@ function make_intern() {
           ok: false,
           why: res.why,
 
-          /* $lab:coverage:off$ */
+          / * $lab:coverage:off$ * /
           details: res.details || {}
-          /* $lab:coverage:on$ */
+          / * $lab:coverage:on$ * /
         }
       }
     },
@@ -297,24 +284,24 @@ function make_intern() {
         delete data.nick
       }
 
-      if (null != data.user && null != data.user.nick) {
-        data.user.handle =
-          null != data.user.handle ? data.user.handle : data.user.nick
-        data.user.handle = downcase
-          ? data.user.handle.toLowerCase()
-          : data.user.handle
-        delete data.user.nick
+      if (null != data.apikey && null != data.apikey.nick) {
+        data.apikey.handle =
+          null != data.apikey.handle ? data.apikey.handle : data.apikey.nick
+        data.apikey.handle = downcase
+          ? data.apikey.handle.toLowerCase()
+          : data.apikey.handle
+        delete data.apikey.nick
       }
 
-      if (null != data.user_data && null != data.user_data.nick) {
-        data.user_data.handle =
-          null != data.user_data.handle
-            ? data.user_data.handle
-            : data.user_data.nick
-        data.user_data.handle = downcase
-          ? data.user_data.handle.toLowerCase()
-          : data.user_data.handle
-        delete data.user_data.nick
+      if (null != data.apikey_data && null != data.apikey_data.nick) {
+        data.apikey_data.handle =
+          null != data.apikey_data.handle
+            ? data.apikey_data.handle
+            : data.apikey_data.nick
+        data.apikey_data.handle = downcase
+          ? data.apikey_data.handle.toLowerCase()
+          : data.apikey_data.handle
+        delete data.apikey_data.nick
       }
 
       if (null != data.q && null != data.q.nick) {
@@ -326,14 +313,14 @@ function make_intern() {
       return data
     },
 
-    // expects normalized user data
-    ensure_handle: function(user_data, options) {
-      var handle = user_data.handle
+    // expects normalized apikey data
+    ensure_handle: function(apikey_data, options) {
+      var handle = apikey_data.handle
 
       if ('string' != typeof handle) {
-        var email = user_data.email
+        var email = apikey_data.email
 
-        // NOTE: assumes email already validated in user_data
+        // NOTE: assumes email already validated in apikey_data
         if (null != email) {
           handle =
             email.split('@')[0].toLowerCase() +
@@ -361,13 +348,13 @@ function make_intern() {
     make_token: Uuid.v4, // Random! Don't leak things.
 
     make_login: async function(spec) {
-      /* $lab:coverage:off$ */
+      / * $lab:coverage:off$ * /
       var seneca = Assert(spec.seneca) || spec.seneca
-      var user = Assert(spec.user) || spec.user
+      var apikey = Assert(spec.apikey) || spec.apikey
       var why = Assert(spec.why) || spec.why
       var ctx = Assert(spec.ctx) || spec.ctx
       var options = Assert(ctx.options) || ctx.options
-      /* $lab:coverage:on$ */
+      / * $lab:coverage:on$ * /
 
       var login_data = spec.login_data || {} // custom data fields
       var onetime = !!spec.onetime
@@ -380,10 +367,10 @@ function make_intern() {
         token: options.make_token(),
 
         // deliberately copied
-        handle: user.handle,
-        email: user.email,
+        handle: apikey.handle,
+        email: apikey.email,
 
-        user_id: user.id,
+        apikey_id: apikey.id,
 
         when: new Date().toISOString(),
 
@@ -407,8 +394,8 @@ function make_intern() {
       return login
     },
 
-    load_user_fields: function(msg, ...rest) {
-      /* $lab:coverage:off$ */
+    load_apikey_fields: function(msg, ...rest) {
+      / * $lab:coverage:off$ * /
       // Seventh Circle of Hell, aka node < 12
       rest.flat =
         'function' == typeof rest.flat
@@ -418,7 +405,7 @@ function make_intern() {
                 return Array.isArray(y) ? a.concat(y) : (a.push(y), a)
               }, [])
             }.bind(rest)
-      /* $lab:coverage:on$ */
+      / * $lab:coverage:on$ * /
 
       var fields = rest
         .flat()
@@ -440,7 +427,7 @@ function make_intern() {
         return { ok: false, email: email, why: 'email-invalid-format' }
       }
 
-      var email_taken = await intern.find_user(seneca, { email: email }, ctx)
+      var email_taken = await intern.find_apikey(seneca, { email: email }, ctx)
 
       return {
         ok: !email_taken.ok,
@@ -499,7 +486,7 @@ function make_intern() {
         }
       }
 
-      var exists = await intern.user_exists(seneca, { handle: handle }, ctx)
+      var exists = await intern.apikey_exists(seneca, { handle: handle }, ctx)
 
       if (exists) {
         return {
@@ -512,11 +499,11 @@ function make_intern() {
       return { ok: true, handle: handle }
     },
 
-    normalize_user_data: function(msg, ctx) {
+    normalize_apikey_data: function(msg, ctx) {
       msg = intern.fix_nick_handle(msg, ctx.options)
 
-      var msg_user = msg.user || {}
-      var msg_user_data = msg.user_data || {}
+      var msg_apikey = msg.apikey || {}
+      var msg_apikey_data = msg.apikey_data || {}
 
       var top_data = {}
       var top_fields = ctx.convenience_fields.concat([
@@ -526,20 +513,19 @@ function make_intern() {
       ])
       top_fields.forEach(f => null == msg[f] || (top_data[f] = msg[f]))
 
-      var user_data = Object.assign({}, msg_user, msg_user_data, top_data)
+      var apikey_data = Object.assign({}, msg_apikey, msg_apikey_data, top_data)
 
       // password -> pass
-      if (null != user_data.password) {
-        user_data.pass = user_data.pass || user_data.password
-        delete user_data.password
+      if (null != apikey_data.password) {
+        apikey_data.pass = apikey_data.pass || apikey_data.password
+        delete apikey_data.password
       }
 
       // strip undefineds
-      Object.keys(user_data).forEach(
-        k => void 0 === user_data[k] && delete user_data[k]
+      Object.keys(apikey_data).forEach(
+        k => void 0 === apikey_data[k] && delete apikey_data[k]
       )
 
-      return user_data
+      return apikey_data
     }
-  }
-}
+*/
