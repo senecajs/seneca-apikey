@@ -42,12 +42,12 @@ module.exports = {
     desc: 'Generate a new API key.',
     reply_desc: {
       ok: '_true_ if successful',
-      xorkey: 'Key string xor\'d with otp input'
+      xorkey: "Key string xor'd with otp input",
     },
     validate: {
       // TODO check length
-      otp: Joi.string()
-    }
+      otp: Joi.string(),
+    },
   },
 
   /*

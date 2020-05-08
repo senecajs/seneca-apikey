@@ -74,7 +74,7 @@ function apikey(options) {
 
     .message('generate:key', intern.make_msg('generate_key', ctx))
 
-/*
+  /*
     .message('get:apikey', intern.make_msg('get_apikey', ctx))
     .message('list:apikey', intern.make_msg('list_apikey', ctx))
     .message('adjust:apikey', intern.make_msg('adjust_apikey', ctx))
@@ -104,17 +104,17 @@ function apikey(options) {
     // TODO seneca.alias method?
     .message('change:password', intern.make_msg('change_pass', ctx))
 */
-  
+
   return {
     exports: {
-/*
+      /*
       find_apikey: async function(seneca, msg, special_ctx) {
         var merged_ctx =
           null == special_ctx ? ctx : seneca.util.deep({}, ctx, special_ctx)
         return intern.find_apikey(seneca, msg, merged_ctx)
       }
 */
-    }
+    },
   }
 }
 
@@ -122,11 +122,11 @@ function make_intern() {
   return {
     SV: 1, // semantic version, used for data migration
 
-    make_msg: function(msg_fn, ctx) {
+    make_msg: function (msg_fn, ctx) {
       return require('./lib/' + msg_fn)(ctx)
     },
 
-    make_ctx: function(initial_ctx, options) {
+    make_ctx: function (initial_ctx, options) {
       Assert(initial_ctx)
       Assert(options)
 

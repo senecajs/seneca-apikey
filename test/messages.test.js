@@ -21,9 +21,8 @@ lab.test('messages', { timeout: 5555 }, async () => {
     log: false,
 
     // NOTE: order is significant
-    calls: []
-      .concat(require('./generate_key.calls.js'))
-/*
+    calls: [].concat(require('./generate_key.calls.js')),
+    /*
       .concat(require('./password.calls.js'))
       .concat(require('./adjust.calls.js'))
       .concat(require('./verify.calls.js'))

@@ -13,17 +13,16 @@ const Shared = require('./shared')
 const LN = require('seneca-msg-test').LN
 
 module.exports = [
-
   LN({
     print: print_calls,
     pattern: 'generate:key',
     params: {
-      otp: 'otp01'
+      otp: 'otp01',
     },
     out: {
       ok: true,
-      xorkey: Joi.string()
-    }
+      xorkey: Joi.string(),
+    },
   }),
 
   /*
