@@ -4,7 +4,7 @@
 // TODO should come from seneca-msg-test to avoid version clash
 const Joi = require('@hapi/joi')
 
-var print_calls = false
+var print_calls = true
 
 var call = {}
 
@@ -14,17 +14,60 @@ const LN = require('seneca-msg-test').LN
 
 module.exports = [
   LN({
+    name: 'k01',
     print: print_calls,
     pattern: 'generate:key',
     params: {
-      otp: 'otp01',
+      owner: 'foo',
+      scope: 'bar'
     },
     out: {
       ok: true,
-      xorkey: Joi.string(),
+      key: Joi.string(),
     },
   }),
 
+  LN({
+    print: print_calls,
+    pattern: 'role:entity,cmd:list',
+    params: {
+      base:'sys',
+      name:'apikey'
+    },
+    out: [],
+    verify: (call)=>{
+      console.dir(call.result.out[0].data$())
+    }
+  }),
+
+  
+  LN({
+    print: print_calls,
+    pattern: 'verify:key',
+    params: {
+      owner: 'foo',
+      scope: 'bar',
+      key: 'not-a-key'
+    },
+    out: {
+      ok: false
+    },
+  }),
+
+  LN({
+    print: print_calls,
+    pattern: 'verify:key',
+    params: {
+      owner: 'foo',
+      scope: 'bar',
+      key: '`k01:out.key`'
+    },
+    out: {
+      ok: true
+    },
+  }),
+
+  
   /*
   // user not found
   {

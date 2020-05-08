@@ -14,7 +14,7 @@ var User = require('..')
 var intern = User.intern
 
 lab.test('make_msg', async () => {
-  var msg0 = intern.make_msg('generate_key', {})
+  var msg0 = intern.make_msg('generate_key', {options:{tagsize:8}})
   expect(typeof msg0).equal('function')
 })
 

@@ -18,7 +18,11 @@
 ## Description
 
 This module is a plugin for
-the [Seneca framework](http://senecajs.org). It provides common actions for supplying API keys to external clients.
+the [Seneca framework](http://senecajs.org). It provides common
+actions for supplying API keys to external clients.
+
+API keys are generated and hashed to the same level as passwords.
+
 
 
 ## Install
@@ -27,6 +31,7 @@ the [Seneca framework](http://senecajs.org). It provides common actions for supp
 npm install seneca
 npm install seneca-promisify // dependency
 npm install seneca-entity // dependency
+npm install @seneca/user // dependency
 npm install @seneca/apikey
 ```
 

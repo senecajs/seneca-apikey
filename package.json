@@ -43,6 +43,7 @@
     "uuid": "^8.0.0"
   },
   "devDependencies": {
+    "@seneca/user": "^5.7.0",
     "coveralls": "^3.1.0",
     "prettier": "^2.0.5",
     "seneca": "^3.20.3",

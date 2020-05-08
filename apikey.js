@@ -19,7 +19,10 @@ const intern = (module.exports.intern = make_intern())
 
 module.exports.defaults = {
   test: false,
-
+  keysize: 32, // does not include tag
+  tagsize: 8,
+  
+  
   /*
   salt: {
     bytelen: 16,
@@ -69,10 +72,12 @@ function apikey(options) {
   var seneca = this
   var ctx = intern.make_ctx({}, options)
 
+  
   seneca
     .fix('sys:apikey')
 
     .message('generate:key', intern.make_msg('generate_key', ctx))
+    .message('verify:key', intern.make_msg('verify_key', ctx))
 
   /*
     .message('get:apikey', intern.make_msg('get_apikey', ctx))
@@ -137,10 +142,53 @@ function make_intern() {
 
           // Standard entity canons
           sys_apikey: 'sys/apikey',
+
+          // Internal version, not encoded in key
+          hash_version: '001'
         },
         initial_ctx
       )
     },
+
+    make_hash: async function(seneca, tag, version, key, scope, owner) {
+      var fullkey = tag+'~'+version+'~'+key+'~'+scope+'~'+owner
+      
+      var out = await seneca.post({
+        sys:'user',
+        hook:'password',
+        cmd:'encrypt',
+        pass: fullkey
+      })
+
+      return out
+    },
+
+    verify_hash: async function(seneca, apikey, tag, version, key, scope, owner) {
+      var fullkey = tag+'~'+version+'~'+key+'~'+scope+'~'+owner
+
+      var msg = {
+        sys:'user',
+        hook:'password',
+        cmd:'pass',
+        proposed: fullkey,
+        pass: apikey.pass,
+        salt: apikey.salt
+      }
+
+      var out = await seneca.post(msg)
+
+      console.log('VERIFY', msg, out)
+      
+
+      
+      return out
+    },
+
+    
+
+    make_key_id: function(owner, tag) {
+      return owner+'~'+tag
+    }
   }
 }
 
