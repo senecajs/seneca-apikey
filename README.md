@@ -785,11 +785,11 @@ Licensed under [MIT][].
 
 [MIT]: ./LICENSE
 [Seneca.js]: https://www.npmjs.com/package/seneca
-[travis-badge]: https://travis-ci.org/senecajs/seneca-apikey.svg
-[travis-url]: https://travis-ci.org/senecajs/seneca-apikey
+[travis-badge]: https://travis-ci.com/senecajs/seneca-apikey.svg?branch=master
+[travis-url]: https://travis-ci.com/senecajs/seneca-apikey
 [coveralls-badge]: https://coveralls.io/repos/github/senecajs/seneca-apikey/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/senecajs/seneca-apikey?branch=master
-[codeclimate-badge]: https://api.codeclimate.com/v1/badges/404faaa89a95635ddfc0/maintainability
+[codeclimate-badge]: https://api.codeclimate.com/v1/badges/79f285a2bfb61305af0f/maintainability
 [codeclimate-url]: https://codeclimate.com/github/senecajs/seneca-apikey/maintainability
 [npm-badge]: https://img.shields.io/npm/v/@seneca/apikey.svg
 [npm-url]: https://npmjs.com/package/@seneca/apikey
@@ -798,3 +798,4 @@ Licensed under [MIT][].
 [gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/senecajs/seneca
 [Senecajs org]: https://github.com/senecajs/
+
