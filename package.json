@@ -1,0 +1,79 @@
+{
+  "name": "@seneca/user",
+  "description": "User management plugin for Seneca",
+  "version": "5.6.0",
+  "keywords": [
+    "seneca",
+    "user",
+    "plugin"
+  ],
+  "author": {
+    "name": "Richard Rodger",
+    "email": "richard@voxgig.com",
+    "url": "http://richardrodger.com/"
+  },
+  "license": "MIT",
+  "main": "user.js",
+  "scripts": {
+    "test": "lab -v -L  -t 100 -P test -r console -o stdout -r html -o test/coverage.html",
+    "test-msgs": "lab -t 90 --coverage-exclude lib/hasher.js -P messages.test -r console -o stdout -r html -o test/coverage.html",
+    "doc": "seneca-doc",
+    "coveralls": "lab -s -P test -r lcov | coveralls",
+    "prettier": "prettier --write --no-semi --single-quote *.js lib/*.js test/*.js",
+    "reset": "npm run clean && npm i && npm test",
+    "clean": "rm -rf node_modules package-lock.json yarn.lock",
+    "repo-tag": "REPO_VERSION=`node -e \"console.log(require('./package').version)\"` && echo TAG: v$REPO_VERSION && git commit -a -m v$REPO_VERSION && git push && git tag v$REPO_VERSION && git push --tags;",
+    "repo-publish-quick": "npm run prettier && npm test && npm run repo-tag && npm publish --access public --registry=http://registry.npmjs.org",
+    "repo-publish": "npm run clean && npm i --registry=http://registry.npmjs.org && npm run repo-publish-quick"
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "user.js",
+    "user-docs.js",
+    "lib"
+  ],
+  "contributors": [
+    "Mircea Alexandru <mircea.alexandru@gmail.com> (http://www.alexandrumircea.ro)",
+    "Cristian Kiss <kissdevel@gmail.com> (https://github.com/ckiss)",
+    "Mihai Dima <mihaizn@gmail.com> (https://github.com/mihaidma)",
+    "Adrien Becchis (https://github.com/AdrieanKhisbe)",
+    "Shane Lacey (https://github.com/shanel262)",
+    "Otávio Augusto Soares (https://github.com/otaviosoares)",
+    "Dean McDonnell (https://github.com/mcdonnelldean)",
+    "Nicolas Herment (https://github.com/nherment)",
+    "Paolo Chiodi (https://github.com/paolochiodi)",
+    "Emer Rutherford (https://github.com/eeswr)",
+    "Matteo Collina (https://github.com/mcollina)",
+    "Wyatt Preul (https://github.com/geek)",
+    "rithdmc (https://github.com/rithdmc)",
+    "Guy Ellis (https://github.com/guyellis)",
+    "Cian Butler (https://github.com/butlerx)",
+    "Sorin Silaghi (https://github.com/sorin7486)"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "dependencies": {
+    "nid": "^1.1.0",
+    "uuid": "^8.0.0"
+  },
+  "devDependencies": {
+    "coveralls": "^3.1.0",
+    "prettier": "^2.0.5",
+    "seneca": "^3.20.3",
+    "seneca-doc": "^2.1.3",
+    "seneca-entity": "^8.0.0",
+    "seneca-joi": "^7.0.2",
+    "seneca-msg-test": "^2.5.0",
+    "seneca-plugin-validator": "^0.6.1",
+    "seneca-promisify": "^1.2.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/senecajs/seneca-user.git"
+  },
+  "pre-commit": [
+    "test"
+  ]
+}
