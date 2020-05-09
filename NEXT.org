@@ -1,1 +1,7 @@
 * action to generate owner id from user_id
+* active flag
+* expiry (optional)
+* DynamoDB, CosmosDB seneca stores (using standard sdks)
+* distribute api hashes to AWS, Azure
+* verify api keys within serverless functions
+

@@ -12,7 +12,6 @@ module.exports = {
         .use('doc')
         .use('joi')
         .use('entity')
-        .use('user')
         .use('..', {})
     return seneca
   },
