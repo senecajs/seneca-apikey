@@ -5,15 +5,14 @@ const Assert = require('assert')
 const Util = require('util')
 const Crypto = require('crypto')
 
+const intern = (apikey.intern = make_intern())
+
 
 module.exports = apikey
 
 module.exports.errors = {}
+module.exports.doc = require('./apikey-doc')
 
-// TODO this might be a better way to provide docs?
-// module.exports.doc = require('./apikey-doc')
-
-const intern = (module.exports.intern = make_intern())
 
 module.exports.defaults = {
   test: false,
@@ -38,20 +37,16 @@ function apikey(options) {
   var ctx = intern.make_ctx({}, options)
 
   
+  // TODO: generate owner id from db id
+  // TODO: publish keys, accept keys
+  
+  
   seneca
     .fix('sys:apikey')
-
     .message('generate:key', intern.make_msg('generate_key', ctx))
     .message('verify:key', intern.make_msg('verify_key', ctx))
-
-
-  /*
-  return {
-    exports: {
-    },
-  }
-  */
 }
+
 
 function make_intern() {
   return {

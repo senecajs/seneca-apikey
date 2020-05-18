@@ -7,6 +7,7 @@
 [![Build Status][travis-badge]][travis-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
 [![Maintainability][codeclimate-badge]][codeclimate-url]
+[![DeepScan grade](https://deepscan.io/api/teams/5016/projects/11602/branches/173763/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5016&pid=11602&bid=173763)
 [![Dependency Status][david-badge]][david-url]
 [![Gitter][gitter-badge]][gitter-url]
 
@@ -57,7 +58,40 @@ Because Seneca treats messages as first-class citizens, 90% of unit
 testing can be implemented with message scenarios that also provide
 detailed usage examples:
 
-* [register_get](test/register_get.calls.js)
+* [generate_key](test/generate_key.calls.js)
+
+
+<!--START:options-->
+
+
+## Options
+
+* `test` : boolean <i><small>false</small></i>
+* `keysize` : number <i><small>32</small></i>
+* `tagsize` : number <i><small>8</small></i>
+* `rounds` : number <i><small>11</small></i>
+* `salt.bytelen` : number <i><small>16</small></i>
+* `salt.format` : string <i><small>"hex"</small></i>
+* `pepper` : string <i><small>""</small></i>
+* `generate_salt` : function <i><small>generate_salt</small></i>
+
+
+Set plugin options when loading with:
+```js
+
+
+seneca.use('apikey', { name: value, ... })
+
+
+```
+
+
+<small>Note: <code>foo.bar</code> in the list above means 
+<code>{ foo: { bar: ... } }</code></small> 
+
+
+
+<!--END:options-->
 
 
 <!--START:action-list-->
@@ -65,17 +99,19 @@ detailed usage examples:
 
 ## Action Patterns
 
-* [generate:key,sys:apikey](#-generatekeysysapikey-)
+* [sys:apikey,generate:key](#-sysapikeygeneratekey-)
+* [sys:apikey,verify:key](#-sysapikeyverifykey-)
 
 
 <!--END:action-list-->
+
 
 <!--START:action-desc-->
 
 
 ## Action Descriptions
 
-### &laquo; `generate:key,sys:apikey` &raquo;
+### &laquo; `sys:apikey,generate:key` &raquo;
 
 Generate a new API key.
 
@@ -83,7 +119,8 @@ Generate a new API key.
 #### Parameters
 
 
-* _otp_ : string
+* _owner_ : string <i><small>"&nbsp;"</small></i>
+* _scope_ : string <i><small>"default"</small></i>
 
 
 
@@ -93,8 +130,35 @@ Generate a new API key.
 
 ```
 {
-  ok: '_true_ if successful',
-  xorkey: "Key string xor'd with otp input"
+  ok: '`true` if successful',
+  key: 'key string'
+}
+```
+
+
+----------
+### &laquo; `sys:apikey,verify:key` &raquo;
+
+Verify an API key.
+
+
+#### Parameters
+
+
+* _owner_ : string <i><small>"&nbsp;"</small></i>
+* _scope_ : string <i><small>"default"</small></i>
+* _key_ : string <i><small>"&nbsp;"</small></i>
+
+
+
+
+#### Replies With
+
+
+```
+{
+  ok: '`true` if verified',
+  why: 'explanation code'
 }
 ```
 
@@ -126,4 +190,3 @@ Licensed under [MIT][].
 [gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/senecajs/seneca
 [Senecajs org]: https://github.com/senecajs/
-

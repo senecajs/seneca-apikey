@@ -8,8 +8,6 @@ var print_calls = true
 
 var call = {}
 
-const Shared = require('./shared')
-
 const LN = require('seneca-msg-test').LN
 
 module.exports = [

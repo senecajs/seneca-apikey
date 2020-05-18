@@ -16,7 +16,7 @@
   "license": "MIT",
   "main": "apikey.js",
   "scripts": {
-    "test": "lab -v -L  -t 100 -P test -r console -o stdout -r html -o test/coverage.html",
+    "test": "lab -v -L  -t 90 -P test -r console -o stdout -r html -o test/coverage.html",
     "test-msgs": "lab -t 90 --coverage-exclude lib/hasher.js -P messages.test -r console -o stdout -r html -o test/coverage.html",
     "doc": "seneca-doc",
     "coveralls": "lab -s -P test -r lcov | coveralls",
