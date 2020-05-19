@@ -1,4 +1,4 @@
-module.exports = function(seneca,util) {
+module.exports = function (seneca, util) {
   var Joi = util.Joi
 
   return {
@@ -6,21 +6,19 @@ module.exports = function(seneca,util) {
       desc: 'Generate a new API key.',
       reply_desc: {
         ok: '`true` if successful',
-        key: 'key string'
+        key: 'key string',
       },
       validate: {
         owner: Joi.string().required(),
         scope: Joi.string().default('default'),
-        
       },
     },
-
 
     verify_key: {
       desc: 'Verify an API key.',
       reply_desc: {
         ok: '`true` if verified',
-        why: 'explanation code'
+        why: 'explanation code',
       },
       validate: {
         owner: Joi.string().required(),
@@ -28,6 +26,5 @@ module.exports = function(seneca,util) {
         key: Joi.string().required(),
       },
     },
-
   }
 }

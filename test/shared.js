@@ -7,12 +7,12 @@ module.exports = {
   make_seneca: () => {
     // TODO hide logs of expected errors
     var seneca = Seneca({ legacy: false })
-        .test()
-        .use('promisify')
-        .use('doc')
-        .use('joi')
-        .use('entity')
-        .use('..', {})
+      .test()
+      .use('promisify')
+      .use('doc')
+      .use('joi')
+      .use('entity')
+      .use('..', {})
     return seneca
   },
 }

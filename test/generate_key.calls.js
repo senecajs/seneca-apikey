@@ -17,7 +17,7 @@ module.exports = [
     pattern: 'generate:key',
     params: {
       owner: 'foo',
-      scope: 'bar'
+      scope: 'bar',
     },
     out: {
       ok: true,
@@ -29,36 +29,25 @@ module.exports = [
     print: print_calls,
     pattern: 'role:entity,cmd:list',
     params: {
-      base:'sys',
-      name:'apikey'
+      base: 'sys',
+      name: 'apikey',
     },
-    out: [{
-      owner: 'foo',
-      tag: Joi.string().length(8),
-      pass: Joi.string().length(128),
-      salt: Joi.string().length(32),
-      tn_gen: Joi.number().required(),
-      tn_vfy_hi: Joi.number().required(),
-      tn_vfy_lo: Joi.number().required(),
-      n_pass_key: Joi.number().required(),
-      n_fail_key: Joi.number().required(),
-      id: Joi.string().regex(/^foo~/).length(12)
-    }],
-    verify: (call)=>{
+    out: [
+      {
+        owner: 'foo',
+        tag: Joi.string().length(8),
+        pass: Joi.string().length(128),
+        salt: Joi.string().length(32),
+        tn_gen: Joi.number().required(),
+        tn_vfy_hi: Joi.number().required(),
+        tn_vfy_lo: Joi.number().required(),
+        n_pass_key: Joi.number().required(),
+        n_fail_key: Joi.number().required(),
+        id: Joi.string().regex(/^foo~/).length(12),
+      },
+    ],
+    verify: (call) => {
       console.dir(call.result.out[0].data$())
-    }
-  }),
-  
-  LN({
-    print: print_calls,
-    pattern: 'verify:key',
-    params: {
-      owner: 'foo',
-      scope: 'bar',
-      key: 'not-a-key'
-    },
-    out: {
-      ok: false
     },
   }),
 
@@ -68,10 +57,10 @@ module.exports = [
     params: {
       owner: 'foo',
       scope: 'bar',
-      key: '`k01:out.key`'
+      key: 'not-a-key',
     },
     out: {
-      ok: true
+      ok: false,
     },
   }),
 
@@ -81,13 +70,12 @@ module.exports = [
     params: {
       owner: 'foo',
       scope: 'bar',
-      key: '`k01:out.key`'
+      key: '`k01:out.key`',
     },
     out: {
-      ok: true
+      ok: true,
     },
   }),
-
 
   LN({
     print: print_calls,
@@ -95,36 +83,49 @@ module.exports = [
     params: {
       owner: 'foo',
       scope: 'bar',
-      key: '`$.k01.out.key.match(/^[^.]+/)[0]+".not-the-core"`'
+      key: '`k01:out.key`',
     },
     out: {
-      ok: false
+      ok: true,
     },
   }),
 
-  
+  LN({
+    print: print_calls,
+    pattern: 'verify:key',
+    params: {
+      owner: 'foo',
+      scope: 'bar',
+      key: '`$.k01.out.key.match(/^[^.]+/)[0]+".not-the-core"`',
+    },
+    out: {
+      ok: false,
+    },
+  }),
+
   LN({
     print: print_calls,
     pattern: 'role:entity,cmd:list',
     params: {
-      base:'sys',
-      name:'apikey'
+      base: 'sys',
+      name: 'apikey',
     },
-    out: [{
-      tn_gen: Joi.number().greater(0),
-      n_pass_key: 2,
-      n_fail_key: 1,
-    }],
-    verify: (call)=>{
+    out: [
+      {
+        tn_gen: Joi.number().greater(0),
+        n_pass_key: 2,
+        n_fail_key: 1,
+      },
+    ],
+    verify: (call) => {
       console.dir(call.result.out[0].data$())
       var k01 = call.result.out[0]
 
       // NOTE: very very small chance this can fail (incorrectly) if times were equal
       return k01.tn_vfy_lo < k01.tn_vfy_hi
-    }
+    },
   }),
 
-  
   /*
   // user not found
   {
