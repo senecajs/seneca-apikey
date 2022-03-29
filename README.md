@@ -1,8 +1,9 @@
 ![Seneca](http://senecajs.org/files/assets/seneca-logo.png)
 
-> A [Seneca.js][] plugin for providing API keys.
+> A [Seneca.js](https://www.npmjs.com/package/seneca) plugin for providing API keys.
 
 # @seneca/apikey
+
 [![npm version][npm-badge]][npm-url]
 [![Build Status][travis-badge]][travis-url]
 [![Coverage Status][coveralls-badge]][coveralls-url]
@@ -11,20 +12,13 @@
 [![Dependency Status][david-badge]][david-url]
 [![Gitter][gitter-badge]][gitter-url]
 
-
 | ![Voxgig](https://www.voxgig.com/res/img/vgt01r.png) | This open source module is sponsored and supported by [Voxgig](https://www.voxgig.com). |
-|---|---|
+| ---------------------------------------------------- | --------------------------------------------------------------------------------------- |
 
 
-## Description
-
-This module is a plugin for
-the [Seneca framework](http://senecajs.org). It provides common
-actions for supplying API keys to external clients.
+This module is a plugin for the [Seneca framework](http://senecajs.org). It provides common actions for supplying API keys to external clients.
 
 API keys are generated and hashed to the same level as passwords.
-
-
 
 ## Install
 
@@ -36,47 +30,41 @@ npm install @seneca/user // dependency
 npm install @seneca/apikey
 ```
 
-### Quick example
+## Quick example
 
-Register a apikey and then create an automatic login for testing.
+Register an apikey and then create an automatic login for testing.
 
 ```js
 const Seneca = require('seneca')
 
-var seneca = Seneca()
-  .use('promisify')
-  .use('entity')
-  .use('apikey')
+var seneca = Seneca().use('promisify').use('entity').use('apikey')
 
 // TODO: complete quick example
-
 ```
 
-### Detailed Examples
+## More Examples
 
 Because Seneca treats messages as first-class citizens, 90% of unit
 testing can be implemented with message scenarios that also provide
 detailed usage examples:
 
-* [generate_key](test/generate_key.calls.js)
-
+- [generate_key](test/generate_key.calls.js)
 
 <!--START:options-->
 
+### Options
 
-## Options
-
-* `test` : boolean <i><small>false</small></i>
-* `keysize` : number <i><small>32</small></i>
-* `tagsize` : number <i><small>8</small></i>
-* `rounds` : number <i><small>11</small></i>
-* `salt.bytelen` : number <i><small>16</small></i>
-* `salt.format` : string <i><small>"hex"</small></i>
-* `pepper` : string <i><small>""</small></i>
-* `generate_salt` : function <i><small>generate_salt</small></i>
-
+- `test` : boolean <i><small>false</small></i>
+- `keysize` : number <i><small>32</small></i>
+- `tagsize` : number <i><small>8</small></i>
+- `rounds` : number <i><small>11</small></i>
+- `salt.bytelen` : number <i><small>16</small></i>
+- `salt.format` : string <i><small>"hex"</small></i>
+- `pepper` : string <i><small>""</small></i>
+- `generate_salt` : function <i><small>generate_salt</small></i>
 
 Set plugin options when loading with:
+
 ```js
 
 
@@ -85,48 +73,34 @@ seneca.use('apikey', { name: value, ... })
 
 ```
 
-
-<small>Note: <code>foo.bar</code> in the list above means 
-<code>{ foo: { bar: ... } }</code></small> 
-
-
+<small>Note: <code>foo.bar</code> in the list above means
+<code>{ foo: { bar: ... } }</code></small>
 
 <!--END:options-->
 
-
 <!--START:action-list-->
 
+### Action Patterns
 
-## Action Patterns
-
-* [sys:apikey,generate:key](#-sysapikeygeneratekey-)
-* [sys:apikey,verify:key](#-sysapikeyverifykey-)
-
+- [sys:apikey,generate:key](#-sysapikeygeneratekey-)
+- [sys:apikey,verify:key](#-sysapikeyverifykey-)
 
 <!--END:action-list-->
 
-
 <!--START:action-desc-->
 
+### Action Descriptions
 
-## Action Descriptions
-
-### &laquo; `sys:apikey,generate:key` &raquo;
+#### &laquo; `sys:apikey,generate:key` &raquo;
 
 Generate a new API key.
 
+##### Parameters
 
-#### Parameters
+- _owner_ : string <i><small>"&nbsp;"</small></i>
+- _scope_ : string <i><small>"default"</small></i>
 
-
-* _owner_ : string <i><small>"&nbsp;"</small></i>
-* _scope_ : string <i><small>"default"</small></i>
-
-
-
-
-#### Replies With
-
+##### Replies With
 
 ```
 {
@@ -135,25 +109,19 @@ Generate a new API key.
 }
 ```
 
+---
 
-----------
-### &laquo; `sys:apikey,verify:key` &raquo;
+#### &laquo; `sys:apikey,verify:key` &raquo;
 
 Verify an API key.
 
+##### Parameters
 
-#### Parameters
+- _owner_ : string <i><small>"&nbsp;"</small></i>
+- _scope_ : string <i><small>"default"</small></i>
+- _key_ : string <i><small>"&nbsp;"</small></i>
 
-
-* _owner_ : string <i><small>"&nbsp;"</small></i>
-* _scope_ : string <i><small>"default"</small></i>
-* _key_ : string <i><small>"&nbsp;"</small></i>
-
-
-
-
-#### Replies With
-
+##### Replies With
 
 ```
 {
@@ -162,21 +130,27 @@ Verify an API key.
 }
 ```
 
-
-----------
-
+---
 
 <!--END:action-desc-->
 
+## Motivation
 
+## Support
 
-## License
+## API
+
+## Contributing
+
+## Background
+
+### License
 
 Copyright (c) 2010-2020, Richard Rodger and other contributors.
 Licensed under [MIT][].
 
-[MIT]: ./LICENSE
-[Seneca.js]: https://www.npmjs.com/package/seneca
+[mit]: ./LICENSE
+[seneca.js]: https://www.npmjs.com/package/seneca
 [travis-badge]: https://travis-ci.com/senecajs/seneca-apikey.svg?branch=master
 [travis-url]: https://travis-ci.com/senecajs/seneca-apikey
 [coveralls-badge]: https://coveralls.io/repos/github/senecajs/seneca-apikey/badge.svg?branch=master
@@ -189,4 +163,4 @@ Licensed under [MIT][].
 [david-url]: https://david-dm.org/senecajs/seneca-apikey
 [gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
 [gitter-url]: https://gitter.im/senecajs/seneca
-[Senecajs org]: https://github.com/senecajs/
+[senecajs org]: https://github.com/senecajs/
