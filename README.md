@@ -30,7 +30,7 @@ npm install @seneca/user // dependency
 npm install @seneca/apikey
 ```
 
-## Quick example
+## Quick Example
 
 Register an apikey and then create an automatic login for testing.
 
