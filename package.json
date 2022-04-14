@@ -44,7 +44,7 @@
   },
   "devDependencies": {
     "@seneca/doc": "^4.0.0",
-    "@seneca/maintain": "^0.0.16",
+    "@seneca/maintain": "^0.0.19",
     "coveralls": "^3.1.0",
     "prettier": "^2.0.5",
     "seneca": "^3.21.0",
