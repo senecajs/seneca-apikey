@@ -548,7 +548,7 @@
             <a href="#lib/generate_key.js"><span class="dirname">lib/</span><span class="basename">generate_key.js</span></a>
         </li>
         <li class="">
-            <span class="cov high">97.87</span>
+            <span class="cov high">100</span>
             <a href="#lib/verify_key.js"><span class="dirname">lib/</span><span class="basename">verify_key.js</span></a>
         </li>
         <li><a href="#linting">Linting Report</a></li>
@@ -559,7 +559,7 @@
           <div class="failures">0</div>
           <div class="skipped">0</div>
           <div class="test-count">5</div>
-          <div class="duration">676</div>
+          <div class="duration">717</div>
       </div>
       <div id="filters">
           <input type="checkbox" checked="" onchange="filter(this)" value="success" id="show-success">
@@ -582,14 +582,14 @@
               <td class="test-title">validate
                   
               </td>
-              <td class="test-duration">7</td>
+              <td class="test-duration">4</td>
           </tr>
           <tr class="show  success">
               <td class="test-id">2</td>
               <td class="test-title">happy
                   
               </td>
-              <td class="test-duration">337</td>
+              <td class="test-duration">346</td>
           </tr>
           <tr class="show  success">
               <td class="test-id">3</td>
@@ -610,7 +610,7 @@
               <td class="test-title">messages
                   
               </td>
-              <td class="test-duration">323</td>
+              <td class="test-duration">361</td>
           </tr>
           </tbody>
       </table>
@@ -618,10 +618,10 @@
     </div>    <div id="coverage">
         <h1>Code Coverage Report</h1>
         <div class="stats high">
-            <div class="percentage">98.02%</div>
-            <div class="sloc">252</div>
-            <div class="hits">247</div>
-            <div class="misses">5</div>
+            <div class="percentage">98.43%</div>
+            <div class="sloc">254</div>
+            <div class="hits">250</div>
+            <div class="misses">4</div>
         </div>
         <div id="filters">
           <input type="checkbox" checked="" onchange="filter(this)" value="generated" id="show-generated">
@@ -632,8 +632,8 @@
                 <h2 id="apikey-doc.js">apikey-doc.js </h2>
                 <div class="stats high">
                     <div class="percentage">100%</div>
-                    <div class="sloc">28</div>
-                    <div class="hits">28</div>
+                    <div class="sloc">30</div>
+                    <div class="hits">30</div>
                     <div class="misses">0</div>
                 </div>
                 <table>
@@ -675,160 +675,172 @@
                           <td class="line" data-tooltip>5</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">    generate_key: {</td>
+                          <td class="source">    messages: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__6" class="hit">
                           <td class="line" data-tooltip>6</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      desc: &#x27;Generate a new API key.&#x27;,</td>
+                          <td class="source">      generate_key: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__7" class="hit">
                           <td class="line" data-tooltip>7</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      reply_desc: {</td>
+                          <td class="source">        desc: &#x27;Generate a new API key.&#x27;,</td>
                           
                         </tr>            <tr id="apikey-doc.js__8" class="hit">
                           <td class="line" data-tooltip>8</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        ok: &#x27;&#x60;true&#x60; if successful&#x27;,</td>
+                          <td class="source">        reply_desc: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__9" class="hit">
                           <td class="line" data-tooltip>9</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        key: &#x27;key string&#x27;,</td>
+                          <td class="source">          ok: &#x27;&#x60;true&#x60; if successful&#x27;,</td>
                           
                         </tr>            <tr id="apikey-doc.js__10" class="hit">
                           <td class="line" data-tooltip>10</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      },</td>
+                          <td class="source">          key: &#x27;key string&#x27;,</td>
                           
                         </tr>            <tr id="apikey-doc.js__11" class="hit">
                           <td class="line" data-tooltip>11</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      validate: {</td>
+                          <td class="source">        },</td>
                           
                         </tr>            <tr id="apikey-doc.js__12" class="hit">
                           <td class="line" data-tooltip>12</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        owner: Joi.string().required(),</td>
+                          <td class="source">        validate: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__13" class="hit">
                           <td class="line" data-tooltip>13</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        scope: Joi.string().default(&#x27;default&#x27;),</td>
+                          <td class="source">          owner: Joi.string().required(),</td>
                           
                         </tr>            <tr id="apikey-doc.js__14" class="hit">
                           <td class="line" data-tooltip>14</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      },</td>
+                          <td class="source">          scope: Joi.string().default(&#x27;default&#x27;),</td>
                           
                         </tr>            <tr id="apikey-doc.js__15" class="hit">
                           <td class="line" data-tooltip>15</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">    },</td>
+                          <td class="source">        },</td>
                           
                         </tr>            <tr id="apikey-doc.js__16" class="hit">
                           <td class="line" data-tooltip>16</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source"></td>
+                          <td class="source">      },</td>
                           
                         </tr>            <tr id="apikey-doc.js__17" class="hit">
                           <td class="line" data-tooltip>17</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">    verify_key: {</td>
+                          <td class="source"></td>
                           
                         </tr>            <tr id="apikey-doc.js__18" class="hit">
                           <td class="line" data-tooltip>18</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      desc: &#x27;Verify an API key.&#x27;,</td>
+                          <td class="source">      verify_key: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__19" class="hit">
                           <td class="line" data-tooltip>19</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      reply_desc: {</td>
+                          <td class="source">        desc: &#x27;Verify an API key.&#x27;,</td>
                           
                         </tr>            <tr id="apikey-doc.js__20" class="hit">
                           <td class="line" data-tooltip>20</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        ok: &#x27;&#x60;true&#x60; if verified&#x27;,</td>
+                          <td class="source">        reply_desc: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__21" class="hit">
                           <td class="line" data-tooltip>21</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        why: &#x27;explanation code&#x27;,</td>
+                          <td class="source">          ok: &#x27;&#x60;true&#x60; if verified&#x27;,</td>
                           
                         </tr>            <tr id="apikey-doc.js__22" class="hit">
                           <td class="line" data-tooltip>22</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      },</td>
+                          <td class="source">          why: &#x27;explanation code&#x27;,</td>
                           
                         </tr>            <tr id="apikey-doc.js__23" class="hit">
                           <td class="line" data-tooltip>23</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      validate: {</td>
+                          <td class="source">        },</td>
                           
                         </tr>            <tr id="apikey-doc.js__24" class="hit">
                           <td class="line" data-tooltip>24</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        owner: Joi.string().required(),</td>
+                          <td class="source">        validate: {</td>
                           
                         </tr>            <tr id="apikey-doc.js__25" class="hit">
                           <td class="line" data-tooltip>25</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        scope: Joi.string().default(&#x27;default&#x27;),</td>
+                          <td class="source">          owner: Joi.string().required(),</td>
                           
                         </tr>            <tr id="apikey-doc.js__26" class="hit">
                           <td class="line" data-tooltip>26</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">        key: Joi.string().required(),</td>
+                          <td class="source">          scope: Joi.string().default(&#x27;default&#x27;),</td>
                           
                         </tr>            <tr id="apikey-doc.js__27" class="hit">
                           <td class="line" data-tooltip>27</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">      },</td>
+                          <td class="source">          key: Joi.string().required(),</td>
                           
                         </tr>            <tr id="apikey-doc.js__28" class="hit">
                           <td class="line" data-tooltip>28</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">    },</td>
+                          <td class="source">        },</td>
                           
                         </tr>            <tr id="apikey-doc.js__29" class="hit">
                           <td class="line" data-tooltip>29</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">  }</td>
+                          <td class="source">      },</td>
                           
                         </tr>            <tr id="apikey-doc.js__30" class="hit">
                           <td class="line" data-tooltip>30</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source">}</td>
+                          <td class="source">    }</td>
                           
                         </tr>            <tr id="apikey-doc.js__31" class="hit">
                           <td class="line" data-tooltip>31</td>
+                          <td class="lint empty"></td>
+                          <td class="hits" data-tooltip></td>
+                          <td class="source">  }</td>
+                          
+                        </tr>            <tr id="apikey-doc.js__32" class="hit">
+                          <td class="line" data-tooltip>32</td>
+                          <td class="lint empty"></td>
+                          <td class="hits" data-tooltip></td>
+                          <td class="source">}</td>
+                          
+                        </tr>            <tr id="apikey-doc.js__33" class="hit">
+                          <td class="line" data-tooltip>33</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
                           <td class="source"></td>
@@ -2491,10 +2503,10 @@
             <div class="file ">
                 <h2 id="lib/verify_key.js">lib/verify_key.js </h2>
                 <div class="stats high">
-                    <div class="percentage">97.87%</div>
+                    <div class="percentage">100%</div>
                     <div class="sloc">47</div>
-                    <div class="hits">46</div>
-                    <div class="misses">1</div>
+                    <div class="hits">47</div>
+                    <div class="misses">0</div>
                 </div>
                 <table>
                     <thead>
@@ -2855,11 +2867,11 @@
                           <td class="hits" data-tooltip>3</td>
                           <td class="source">      apikey.tn_vfy_hi &#x3D;</td>
                           
-                        </tr>            <tr id="lib/verify_key.js__59" class="chunks">
+                        </tr>            <tr id="lib/verify_key.js__59" class="hit">
                           <td class="line" data-tooltip>59</td>
                           <td class="lint empty"></td>
                           <td class="hits" data-tooltip></td>
-                          <td class="source"><div>        </div><div class="miss true" data-tooltip>hashres.tn_vfy &gt; apikey.tn_vfy_hi</div><div> ? hashres.tn_vfy : </div><div class="miss never" data-tooltip>apikey.tn_vfy_hi</div></td>
+                          <td class="source">        hashres.tn_vfy &gt; apikey.tn_vfy_hi ? hashres.tn_vfy : apikey.tn_vfy_hi</td>
                           
                         </tr>            <tr id="lib/verify_key.js__60" class="hit">
                           <td class="line" data-tooltip>60</td>
