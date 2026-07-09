@@ -1,24 +1,17 @@
 ![Seneca](http://senecajs.org/files/assets/seneca-logo.png)
-
-> A [Seneca.js](https://www.npmjs.com/package/seneca) plugin for providing API keys.
+> A [Seneca.js](http://senecajs.org) plugin
 
 # @seneca/apikey
 
-[![npm version][npm-badge]][npm-url]
-[![Build Status][travis-badge]][travis-url]
-[![Coverage Status][coveralls-badge]][coveralls-url]
-[![Maintainability][codeclimate-badge]][codeclimate-url]
+[![npm version](https://img.shields.io/npm/v/@seneca/apikey.svg)](https://npmjs.com/package/@seneca/apikey)
+[![build](https://github.com/senecajs/seneca-apikey/actions/workflows/build.yml/badge.svg)](https://github.com/senecajs/seneca-apikey/actions/workflows/build.yml)
+[![Known Vulnerabilities](https://snyk.io/test/github/senecajs/seneca-apikey/badge.svg)](https://snyk.io/test/github/senecajs/seneca-apikey)
+[![Coverage Status](https://coveralls.io/repos/github/senecajs/seneca-apikey/badge.svg?branch=master)](https://coveralls.io/github/senecajs/seneca-apikey?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/79f285a2bfb61305af0f/maintainability)](https://codeclimate.com/github/senecajs/seneca-apikey/maintainability)
 [![DeepScan grade](https://deepscan.io/api/teams/5016/projects/11602/branches/173763/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=5016&pid=11602&bid=173763)
-[![Dependency Status][david-badge]][david-url]
-[![Gitter][gitter-badge]][gitter-url]
 
 | ![Voxgig](https://www.voxgig.com/res/img/vgt01r.png) | This open source module is sponsored and supported by [Voxgig](https://www.voxgig.com). |
-| ---------------------------------------------------- | --------------------------------------------------------------------------------------- |
-
-
-This module is a plugin for the [Seneca framework](http://senecajs.org). It provides common actions for supplying API keys to external clients.
-
-API keys are generated and hashed to the same level as passwords.
+|---|---|
 
 ## Install
 
@@ -29,7 +22,6 @@ npm install seneca-entity // dependency
 npm install @seneca/user // dependency
 npm install @seneca/apikey
 ```
-
 ## Quick Example
 
 Register an apikey and then create an automatic login for testing.
@@ -41,7 +33,6 @@ var seneca = Seneca().use('promisify').use('entity').use('apikey')
 
 // TODO: complete quick example
 ```
-
 ## More Examples
 
 Because Seneca treats messages as first-class citizens, 90% of unit
@@ -66,13 +57,9 @@ detailed usage examples:
 Set plugin options when loading with:
 
 ```js
-
-
 seneca.use('apikey', { name: value, ... })
 
-
 ```
-
 <small>Note: <code>foo.bar</code> in the list above means
 <code>{ foo: { bar: ... } }</code></small>
 
@@ -102,13 +89,12 @@ Generate a new API key.
 
 ##### Replies With
 
-```
+```js
 {
   ok: '`true` if successful',
   key: 'key string'
 }
 ```
-
 ---
 
 #### &laquo; `sys:apikey,verify:key` &raquo;
@@ -123,13 +109,12 @@ Verify an API key.
 
 ##### Replies With
 
-```
+```js
 {
   ok: '`true` if verified',
   why: 'explanation code'
 }
 ```
-
 ---
 
 <!--END:action-desc-->
@@ -138,9 +123,17 @@ Verify an API key.
 
 ## Support
 
+If you're using this module and need help, you can:
+
+- Post a [github issue](https://github.com/senecajs/seneca-apikey/issues)
+- Tweet to [@senecajs](http://twitter.com/senecajs)
+- Ask on the [Gitter](https://gitter.im/senecajs/seneca)
+
 ## API
 
 ## Contributing
+
+The [Senecajs org](https://github.com/senecajs/) encourages open participation. If you feel you can help in any way, be it with documentation, examples, extra testing, or new features please get in touch.
 
 ## Background
 
@@ -151,16 +144,4 @@ Licensed under [MIT][].
 
 [mit]: ./LICENSE
 [seneca.js]: https://www.npmjs.com/package/seneca
-[travis-badge]: https://travis-ci.com/senecajs/seneca-apikey.svg?branch=master
-[travis-url]: https://travis-ci.com/senecajs/seneca-apikey
-[coveralls-badge]: https://coveralls.io/repos/github/senecajs/seneca-apikey/badge.svg?branch=master
-[coveralls-url]: https://coveralls.io/github/senecajs/seneca-apikey?branch=master
-[codeclimate-badge]: https://api.codeclimate.com/v1/badges/79f285a2bfb61305af0f/maintainability
-[codeclimate-url]: https://codeclimate.com/github/senecajs/seneca-apikey/maintainability
-[npm-badge]: https://img.shields.io/npm/v/@seneca/apikey.svg
-[npm-url]: https://npmjs.com/package/@seneca/apikey
-[david-badge]: https://david-dm.org/senecajs/seneca-apikey.svg
-[david-url]: https://david-dm.org/senecajs/seneca-apikey
-[gitter-badge]: https://badges.gitter.im/Join%20Chat.svg
-[gitter-url]: https://gitter.im/senecajs/seneca
 [senecajs org]: https://github.com/senecajs/
